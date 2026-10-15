@@ -2,16 +2,16 @@
 
 **Live demo: https://ferjoo.github.io/financial-dashboard/**
 
-A front-end demo of the financial reporting platform I built as Interim CTO / Lead Developer at Novago for a betting-shop operator in Guatemala. With it, finance and management went from waiting a full month for their reports to having them by mid-month.
+A front-end demo of a financial reporting dashboard for a multi-branch business. It is based on a reporting platform I built as Interim CTO / Lead Developer at Novago, where finance and management went from waiting a full month for their reports to having them by mid-month.
 
-> **Every number, bet shop, cashier, affiliate and user in this demo is invented.** The data comes from a seeded generator in `src/mock/`, not from any real transactions.
+> **Every number, branch, agent, partner and user in this demo is invented.** The data comes from a seeded generator in `src/mock/`, not from any real transactions.
 
 ## What you can try
 
-- **Financial dashboard**: totals across weekly reports (bets, deposits, withdrawals, payouts, GGR/NGR), bar charts by cashier and bet shop, and per-shop drill-down.
-- **Report detail**: one week at a time, by cashier or by bet shop, with top-10 tables and CSV export.
-- **Affiliate dashboard**: registrations, first-time deposits (FTD) and earnings per affiliate, sortable.
-- **Playground**: compare two date ranges side by side, plus an hourly activity heatmap used to spot off-hours activity (one sample week contains a planted 2–3 a.m. session).
+- **Financial dashboard**: totals across weekly reports (sales, incoming and outgoing payments, refunds, gross and net margin), charts by agent and by branch, and a per-branch drill-down.
+- **Report detail**: one week at a time, by agent or by branch, with top-10 tables and CSV export.
+- **Partner dashboard**: sign-ups, first purchases and earnings per partner, sortable.
+- **Playground**: compare two date ranges side by side, plus an hourly heatmap to spot after-hours activity (one sample week contains a planted 2–3 a.m. session).
 - **Role-based access**: switch between the five roles from the sidebar ("View as") and watch pages and actions appear or disappear.
 - **Uploads**: the flow works, but files never leave the browser; an extra week of sample data is generated instead.
 

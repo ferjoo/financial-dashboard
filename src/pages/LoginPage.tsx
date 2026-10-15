@@ -8,9 +8,9 @@ import { BarChart3, LogIn } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const ROLE_HINTS: Record<DemoRole, string> = {
-  superadmin: 'Everything: offline and online channels, uploads, users and the playground.',
-  offline_admin: 'Bet-shop channel: dashboards, reports, uploads and offline users.',
-  offline_viewer: 'Read-only bet-shop dashboards, the view management uses.',
+  superadmin: 'Everything: in-store and online channels, uploads, users and the playground.',
+  offline_admin: 'Branch channel: dashboards, reports, uploads and in-store users.',
+  offline_viewer: 'Read-only branch dashboards, the view management uses.',
   online_admin: 'Website channel tools and online users.',
   online_viewer: 'Read-only website channel dashboard.',
 }

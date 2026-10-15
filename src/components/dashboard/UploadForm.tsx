@@ -42,9 +42,9 @@ export default function UploadForm({ onSuccess, uploadType = 'financial' }: Uplo
   // Demo: lets visitors try the flow without having a CSV at hand. Headers only, no real rows.
   function pickSampleFile() {
     const header = uploadType === 'affiliate'
-      ? 'Aff. ID,Affiliate Username,Affiliate Status,FTD Count,FTD Amount,Currency\n'
+      ? 'Partner ID,Partner Name,Partner Status,First purchases,First purchase value,Currency\n'
       : 'Transaction ID,Date,Amount,Transaction Type,Owner Type,Owner Name,Currency\n'
-    setFile(new File([header], uploadType === 'affiliate' ? 'sample-affiliates.csv' : 'sample-week.csv', { type: 'text/csv' }))
+    setFile(new File([header], uploadType === 'affiliate' ? 'sample-partners.csv' : 'sample-week.csv', { type: 'text/csv' }))
   }
 
   async function handleUpload() {

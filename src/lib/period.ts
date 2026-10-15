@@ -12,9 +12,9 @@ export function formatPeriod(report: Pick<ReportMeta, 'dateFrom' | 'dateTo' | 'c
   return `${from.toLocaleDateString('en-US', opts)} – ${to.toLocaleDateString('en-US', opts)}, ${year}`
 }
 
-/** "March 2026" for monthly affiliate reports (AFF-YYYY-MM); other ids are returned as-is. */
+/** "March 2026" for monthly partner reports (PRT-YYYY-MM); other ids are returned as-is. */
 export function formatAffiliatePeriod(reportId: string): string {
-  const match = /^AFF-(\d{4})-(\d{2})$/.exec(reportId)
+  const match = /^PRT-(\d{4})-(\d{2})$/.exec(reportId)
   if (!match) return reportId
   const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, 1))
   return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })

@@ -61,29 +61,29 @@ export default function AffiliateDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-lg font-semibold text-gray-900">Affiliate Dashboard</h1>
+        <h1 className="text-lg font-semibold text-gray-900">Partner Dashboard</h1>
         <p className="text-sm text-gray-500 mt-0.5">
-          Aggregated affiliate performance across all uploaded reports
+          Aggregated partner performance across all uploaded reports
         </p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Total FTD Count"
+          title="First purchases"
           value={totalFtdCount.toLocaleString()}
           icon={<Hash className="w-5 h-5" />}
           color="primary"
-          description="First-time depositors"
+          description="New paying customers"
         />
         <MetricCard
-          title="Total FTD Amount"
+          title="First purchase value"
           value={format(totalFtdAmount)}
           icon={<DollarSign className="w-5 h-5" />}
           color="green"
-          description="First-time deposit value"
+          description="Value of first purchases"
         />
         <MetricCard
-          title="Affiliates"
+          title="Partners"
           value={affiliateCount.toLocaleString()}
           icon={<Users className="w-5 h-5" />}
           color="blue"
@@ -96,17 +96,17 @@ export default function AffiliateDashboardPage() {
         />
       </div>
 
-      {/* Affiliates Table */}
+      {/* Partners Table */}
       <div className="rounded-lg border border-gray-200 bg-white overflow-hidden">
         <div className="px-5 py-4 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-gray-900">All Affiliates</h2>
+          <h2 className="text-sm font-semibold text-gray-900">All Partners</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50/50">
                 <SortableHeader
-                  label="Username"
+                  label="Partner"
                   sortKey="username"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -116,7 +116,7 @@ export default function AffiliateDashboardPage() {
                   Status
                 </th>
                 <SortableHeader
-                  label="Player Reg."
+                  label="Sign-ups"
                   sortKey="playerRegistrations"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -124,7 +124,7 @@ export default function AffiliateDashboardPage() {
                   align="right"
                 />
                 <SortableHeader
-                  label="FTD Count"
+                  label="First purchases"
                   sortKey="ftdCount"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -132,7 +132,7 @@ export default function AffiliateDashboardPage() {
                   align="right"
                 />
                 <SortableHeader
-                  label="FTD Amount"
+                  label="First purchase value"
                   sortKey="ftdAmount"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -145,7 +145,7 @@ export default function AffiliateDashboardPage() {
               {affiliates.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-5 py-8 text-center text-sm text-gray-400">
-                    No affiliate data yet. Upload an affiliate report to get started.
+                    No partner data yet. Upload a partner report to get started.
                   </td>
                 </tr>
               ) : (
@@ -176,10 +176,10 @@ export default function AffiliateDashboardPage() {
       {recentReports.length > 0 && (
         <div className="rounded-lg border border-gray-200 bg-white">
           <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-900">Recent Affiliate Reports</h2>
+            <h2 className="text-sm font-semibold text-gray-900">Recent Partner Reports</h2>
             {canManage && (
               <Link
-                to="/affiliates/reports"
+                to="/partners/reports"
                 className="text-xs text-primary-700 hover:text-primary-800 font-medium rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
               >
                 View all
@@ -203,7 +203,7 @@ export default function AffiliateDashboardPage() {
               return canManage ? (
                 <Link
                   key={r.reportId}
-                  to={`/affiliates/reports/${r.reportId}`}
+                  to={`/partners/reports/${r.reportId}`}
                   className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
                 >
                   {content}

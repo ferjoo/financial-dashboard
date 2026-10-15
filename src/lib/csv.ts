@@ -19,14 +19,14 @@ export function buildReportMetricRows(
   const data = metrics[groupBy] ?? {}
   return Object.entries(data).map(([name, totals]) => ({
     name,
-    deposits: totals.deposits ?? 0,
-    withdrawals: totals.withdrawals ?? 0,
-    bets: totals.bets ?? 0,
-    payouts: totals.payouts ?? 0,
-    winnings: totals.winnings ?? 0,
-    betsCount: totals.betsCount ?? 0,
-    depositsCount: totals.depositsCount ?? 0,
-    withdrawalsCount: totals.withdrawalsCount ?? 0,
+    paymentsIn: totals.deposits ?? 0,
+    paymentsOut: totals.withdrawals ?? 0,
+    sales: totals.bets ?? 0,
+    refunds: totals.payouts ?? 0,
+    returns: totals.winnings ?? 0,
+    salesCount: totals.betsCount ?? 0,
+    paymentsInCount: totals.depositsCount ?? 0,
+    paymentsOutCount: totals.withdrawalsCount ?? 0,
   }))
 }
 

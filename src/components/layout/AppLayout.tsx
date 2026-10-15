@@ -23,10 +23,10 @@ import {
 import { Button } from '@/components/ui/button'
 
 const OFFLINE_FINANCIAL_DASHBOARD = { to: '/', icon: LayoutDashboard, label: 'Financial Dashboard', end: true }
-const OFFLINE_AFFILIATE_DASHBOARD = { to: '/affiliates', icon: Handshake, label: 'Affiliate Dashboard', end: true }
+const OFFLINE_AFFILIATE_DASHBOARD = { to: '/partners', icon: Handshake, label: 'Partner Dashboard', end: true }
 const OFFLINE_ADMIN_NAV = [
   { to: '/reports', icon: FileText, label: 'Financial Reports', end: false },
-  { to: '/affiliates/reports', icon: FileText, label: 'Affiliate Reports', end: false },
+  { to: '/partners/reports', icon: FileText, label: 'Partner Reports', end: false },
   { to: '/upload', icon: Upload, label: 'Upload CSV', end: false },
 ]
 
@@ -101,7 +101,7 @@ export default function AppLayout() {
             <div>
               <div className="flex items-center gap-1.5 px-3 mb-1">
                 <Store className="w-3 h-3 text-gray-400" />
-                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Offline</p>
+                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">In-store</p>
               </div>
               <div className="space-y-0.5">
                 {[OFFLINE_FINANCIAL_DASHBOARD, OFFLINE_AFFILIATE_DASHBOARD, ...(showOfflineAdmin ? OFFLINE_ADMIN_NAV : [])].map(({ to, icon: Icon, label, end }) => (
@@ -259,7 +259,7 @@ export default function AppLayout() {
           <Info className="w-4 h-4 shrink-0 mt-px" aria-hidden="true" />
           <p>
             <span className="font-semibold">Demo with sample data.</span>{' '}
-            Every bet shop, cashier, affiliate and amount is invented. Uploads and edits stay in your browser and reset on reload.
+            Every branch, agent, partner and amount is invented. Uploads and edits stay in your browser and reset on reload.
           </p>
         </div>
 

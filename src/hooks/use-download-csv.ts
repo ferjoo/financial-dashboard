@@ -6,7 +6,7 @@ export function useDownloadReportMetricsCsv(reportId: string) {
   return useCallback(
     (metrics: ReportMetrics, groupBy: 'byCashier' | 'byBetshop') => {
       const rows = buildReportMetricRows(metrics, groupBy)
-      const suffix = groupBy === 'byCashier' ? 'by-cashier' : 'by-betshop'
+      const suffix = groupBy === 'byCashier' ? 'by-agent' : 'by-branch'
       downloadCsv(rows, `report-${reportId}-${suffix}.csv`)
     },
     [reportId],

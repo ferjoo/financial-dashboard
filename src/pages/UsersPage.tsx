@@ -183,8 +183,8 @@ export default function UsersPage() {
                   }
                   className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
-                  <option value="offline_viewer">Offline Viewer</option>
-                  <option value="offline_admin">Offline Admin</option>
+                  <option value="offline_viewer">In-store Viewer</option>
+                  <option value="offline_admin">In-store Admin</option>
                   <option value="online_viewer">Online Viewer</option>
                   <option value="online_admin">Online Admin</option>
                   <option value="superadmin">Super Admin</option>

@@ -34,11 +34,11 @@ type AuditMetricKey = 'deposits' | 'bets' | 'withdrawals' | 'payouts' | 'winning
 type AuditValueMode = 'amount' | 'count'
 
 const AUDIT_TYPES: { key: AuditMetricKey; label: string }[] = [
-  { key: 'deposits',    label: 'Deposits' },
-  { key: 'bets',        label: 'Bets' },
-  { key: 'withdrawals', label: 'Withdrawals' },
-  { key: 'payouts',     label: 'Payouts' },
-  { key: 'winnings',    label: 'Winnings' },
+  { key: 'deposits',    label: 'Payments in' },
+  { key: 'bets',        label: 'Sales' },
+  { key: 'withdrawals', label: 'Payments out' },
+  { key: 'payouts',     label: 'Refunds' },
+  { key: 'winnings',    label: 'Returns' },
 ]
 
 /** Merge multiple byDayHour maps into one, summing values for the same date+hour+key */
@@ -172,7 +172,7 @@ export default function PlaygroundPage() {
             )}
           >
             <Users className="w-3.5 h-3.5" />
-            By Cashier
+            By Agent
           </button>
           <button
             onClick={() => setViewFilter('betshop')}
@@ -184,7 +184,7 @@ export default function PlaygroundPage() {
             )}
           >
             <Store className="w-3.5 h-3.5" />
-            By Betshop
+            By Branch
           </button>
         </div>
         <Button variant="secondary" size="sm" onClick={toggleCurrency}>
@@ -199,7 +199,7 @@ export default function PlaygroundPage() {
           {/* Breakdown tables first — only shown when a specific view is selected, not on Totals */}
           {viewFilter === 'cashier' && (
             <ComparisonBreakdownTable
-              title="Cashier breakdown"
+              title="Agent breakdown"
               icon="cashier"
               dataA={byEntityA.byCashier}
               dataB={byEntityB.byCashier}
@@ -209,7 +209,7 @@ export default function PlaygroundPage() {
           )}
           {viewFilter === 'betshop' && (
             <ComparisonBreakdownTable
-              title="Betshop breakdown"
+              title="Branch breakdown"
               icon="betshop"
               dataA={byEntityA.byBetshop}
               dataB={byEntityB.byBetshop}
@@ -222,19 +222,19 @@ export default function PlaygroundPage() {
           {showCashier && (
             <div className="space-y-4">
               {viewFilter === 'totals' && (
-                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">By Cashier</h3>
+                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">By Agent</h3>
               )}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComparisonBarChart title="Money In — Cashiers"    dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['deposits', 'bets']}        labelA={labelA} labelB={labelB} />
-                <ComparisonBarChart title="Money Out — Cashiers"   dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['payouts', 'withdrawals']}  labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Inflow — Agents"    dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['deposits', 'bets']}        labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Outflow — Agents"   dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['payouts', 'withdrawals']}  labelA={labelA} labelB={labelB} />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComparisonBarChart title="Bets — Cashiers"        dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['bets']}        labelA={labelA} labelB={labelB} />
-                <ComparisonBarChart title="Deposits — Cashiers"    dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['deposits']}    labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Sales — Agents"        dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['bets']}        labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Payments in — Agents"    dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['deposits']}    labelA={labelA} labelB={labelB} />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComparisonBarChart title="Payouts — Cashiers"     dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['payouts']}     labelA={labelA} labelB={labelB} />
-                <ComparisonBarChart title="Withdrawals — Cashiers" dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['withdrawals']} labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Refunds — Agents"     dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['payouts']}     labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Payments out — Agents" dataA={byEntityA.byCashier} dataB={byEntityB.byCashier} metricKeys={['withdrawals']} labelA={labelA} labelB={labelB} />
               </div>
             </div>
           )}
@@ -242,22 +242,22 @@ export default function PlaygroundPage() {
           {showBetshop && (
             <div className="space-y-4">
               {viewFilter === 'totals' && (
-                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">By Betshop</h3>
+                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">By Branch</h3>
               )}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComparisonBarChart title="Money In — Betshops"    dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['deposits', 'bets']}        labelA={labelA} labelB={labelB} />
-                <ComparisonBarChart title="Money Out — Betshops"   dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['payouts', 'withdrawals']}  labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Inflow — Branches"    dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['deposits', 'bets']}        labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Outflow — Branches"   dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['payouts', 'withdrawals']}  labelA={labelA} labelB={labelB} />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComparisonBarChart title="Bets — Betshops"        dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['bets']}        labelA={labelA} labelB={labelB} />
-                <ComparisonBarChart title="Deposits — Betshops"    dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['deposits']}    labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Sales — Branches"        dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['bets']}        labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Payments in — Branches"    dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['deposits']}    labelA={labelA} labelB={labelB} />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComparisonBarChart title="Payouts — Betshops"     dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['payouts']}     labelA={labelA} labelB={labelB} />
-                <ComparisonBarChart title="Winnings — Betshops"    dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['winnings']}    labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Refunds — Branches"     dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['payouts']}     labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Returns — Branches"    dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['winnings']}    labelA={labelA} labelB={labelB} />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ComparisonBarChart title="Withdrawals — Betshops" dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['withdrawals']} labelA={labelA} labelB={labelB} />
+                <ComparisonBarChart title="Payments out — Branches" dataA={byEntityA.byBetshop} dataB={byEntityB.byBetshop} metricKeys={['withdrawals']} labelA={labelA} labelB={labelB} />
               </div>
             </div>
           )}

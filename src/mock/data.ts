@@ -11,7 +11,7 @@ import type {
 } from '@/types/api'
 import { createRandom, round2, type Random } from './random'
 
-// ── Bet shops and cashiers ──────────────────────────────────────────────────
+// ── Branches and agents ─────────────────────────────────────────────────────
 
 interface Shop {
   name: string
@@ -21,7 +21,7 @@ interface Shop {
 interface Cashier {
   name: string
   shop: string
-  /** Hours the cashier is on shift (inclusive start, exclusive end) */
+  /** Hours the agent is on shift (inclusive start, exclusive end) */
   shift: [number, number]
 }
 
@@ -54,10 +54,10 @@ const HOUR_WEIGHT = [
   0.6, 0.55, 0.5, 0.55, 0.65, 0.75, 0.9, 1.0, 0.95, 0.85, 0.6, 0.3,
 ]
 
-/** Monday = 0 … Sunday = 6; weekends and match days are busier */
+/** Monday = 0 … Sunday = 6; Fridays and weekends are busier */
 const WEEKDAY_WEIGHT = [0.8, 0.85, 0.95, 0.9, 1.1, 1.35, 1.3]
 
-// ── Transaction cells: one per report × day × hour × cashier ────────────────
+// ── Transaction cells: one per report × day × hour × agent ──────────────────
 
 interface Cell {
   reportId: string
@@ -103,7 +103,7 @@ function makeCell(rand: Random, base: { reportId: string; date: string; hour: nu
     withdrawalsCount,
     payouts,
     payoutsCount,
-    // "Won" rows belong to the bet shop, not the cashier (same as the real CSVs)
+    // Returns are recorded per branch, not per agent (same as the production data)
     winnings: round2(payouts * rand.between(0.95, 1.05)),
     winningsCount: payoutsCount,
     cancellations: cancellationsCount ? round2(rand.between(20, 150)) : 0,
@@ -247,14 +247,14 @@ export function computeGerencia(): GerenciaMetrics {
   }
 }
 
-// ── Affiliates ──────────────────────────────────────────────────────────────
+// ── Partners ────────────────────────────────────────────────────────────────
 
 const AFFILIATE_HANDLES = [
-  'quetzal_bets', 'volcan_tips', 'tikal_picks', 'ceiba_media', 'atitlan_promo', 'pacaya_sports',
-  'jaguar_odds', 'maya_streams', 'izabal_fans', 'peten_gol', 'quetzal_tipster', 'lago_azul_tv',
-  'xela_futbol', 'antigua_social', 'cuchumatanes', 'rio_dulce_bets', 'monterrico_live', 'fuego_picks',
-  'santa_ana_media', 'copan_gaming', 'zacapa_deportes', 'coban_news', 'retalhuleu_fm', 'mazate_tips',
-  'jutiapa_promo', 'flores_live', 'huehue_streams', 'sacate_bets', 'salama_social', 'chiqui_tips',
+  'Quetzal Media', 'Volcán Digital', 'Tikal Partners', 'Ceiba Marketing', 'Atitlán Promotions', 'Pacaya Labs',
+  'Jaguar Commerce', 'Maya Networks', 'Izabal Group', 'Petén Ventures', 'Lago Azul Studio', 'Xela Retail Co.',
+  'Antigua Social', 'Cuchumatanes Co.', 'Río Dulce Trading', 'Monterrico Live', 'Fuego Creative', 'Santa Ana Media',
+  'Copán Solutions', 'Zacapa Logistics', 'Cobán News', 'Retalhuleu FM', 'Mazate Partners', 'Jutiapa Promo',
+  'Flores Digital', 'Huehue Studio', 'Sacatepéquez Commerce', 'Salamá Social', 'Chiquimula Media', 'Amatitlán Group',
 ]
 
 interface Affiliate {
@@ -270,7 +270,7 @@ const AFFILIATES: Affiliate[] = (() => {
     affiliateId: String(48210 + i * 7),
     username,
     status: rand.chance(0.15) ? 'Inactive' : 'Active',
-    // A few big affiliates, a long tail of small ones
+    // A few big partners, a long tail of small ones
     reach: Math.pow(rand.next(), 2.2) * 3 + 0.1,
   }))
 })()
@@ -314,7 +314,7 @@ function generateAffiliateReport(year: number, month: number, seed: number): Sto
 
   const createdAt = new Date(Date.UTC(year, month + 1, 2, 15, 30)).toISOString()
   return {
-    reportId: `AFF-${year}-${String(month + 1).padStart(2, '0')}`,
+    reportId: `PRT-${year}-${String(month + 1).padStart(2, '0')}`,
     createdAt,
     affiliates,
     totals: { ftdCount, ftdAmount: round2(ftdAmount) },
@@ -344,7 +344,7 @@ export function deleteAffiliateReport(reportId: string) {
 }
 
 export function simulateAffiliateUpload(seed: number): StoredAffiliateReport {
-  const latest = affiliateReports.reduce((max, r) => (r.reportId > max ? r.reportId : max), 'AFF-2026-02')
+  const latest = affiliateReports.reduce((max, r) => (r.reportId > max ? r.reportId : max), 'PRT-2026-02')
   const [, y, m] = latest.split('-').map(Number)
   const report = generateAffiliateReport(m === 12 ? y + 1 : y, m % 12, seed)
   report.createdAt = new Date().toISOString()

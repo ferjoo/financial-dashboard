@@ -70,11 +70,11 @@ export default function DashboardPage() {
 
   const pieData = g
     ? [
-        { name: 'Deposits',      value: totalDeposits,      color: '#16a34a' },
-        { name: 'Withdrawals',   value: totalWithdrawals,   color: '#c026d3' },
-        { name: 'Bets',          value: totalBets,          color: '#2563eb' },
-        { name: 'Payouts',       value: totalPayouts,       color: '#ea580c' },
-        { name: 'Cancellations', value: totalCancellations, color: '#dc2626' },
+        { name: 'Payments in',      value: totalDeposits,      color: '#16a34a' },
+        { name: 'Payments out',   value: totalWithdrawals,   color: '#c026d3' },
+        { name: 'Sales',          value: totalBets,          color: '#2563eb' },
+        { name: 'Refunds',       value: totalPayouts,       color: '#ea580c' },
+        { name: 'Voided transactions', value: totalCancellations, color: '#dc2626' },
       ]
     : []
 
@@ -84,7 +84,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-lg font-semibold text-gray-900">Financial Dashboard</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            Bet-shop totals across {g?.reportCount ?? '…'} weekly reports.
+            Branch totals across {g?.reportCount ?? '…'} weekly reports.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -118,13 +118,13 @@ export default function DashboardPage() {
         <>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <MetricCard
-              title="Betshops"
+              title="Branches"
               value={String(betshopCount)}
               icon={<Store className="w-5 h-5" />}
               color="primary"
             />
             <MetricCard
-              title="Cashiers"
+              title="Agents"
               value={String(cashierCount)}
               icon={<Users className="w-5 h-5" />}
               color="accent"
@@ -136,70 +136,70 @@ export default function DashboardPage() {
               color="primary"
             />
             <MetricCard
-              title="Money In"
+              title="Inflow"
               value={fmt(revenueShare)}
-              description="Bets + Deposits"
+              description="Sales + Payments in"
               icon={<TrendingUp className="w-5 h-5" />}
               color="green"
             />
             <MetricCard
-              title="Money Out"
+              title="Outflow"
               value={fmt(wAndP)}
-              description="Payouts + Withdrawals"
+              description="Refunds + Payments out"
               icon={<Wallet className="w-5 h-5" />}
               color="purple"
             />
             <MetricCard
               title="Profit"
               value={fmt(revenueShare - wAndP)}
-              description="Money In − Money Out"
+              description="Inflow − Outflow"
               icon={<DollarSign className="w-5 h-5" />}
               color={revenueShare - wAndP >= 0 ? 'green' : 'red'}
               valueClassName={revenueShare - wAndP >= 0 ? 'text-green-700' : 'text-red-700'}
             />
             <MetricCard
-              title="Bets"
+              title="Sales"
               value={fmt(totalBets)}
               description={betsCount > 0 ? `${betsCount.toLocaleString()} transactions` : undefined}
               icon={<Coins className="w-5 h-5" />}
               color="blue"
             />
             <MetricCard
-              title="Deposits"
+              title="Payments in"
               value={fmt(totalDeposits)}
               description={depositsCount > 0 ? `${depositsCount.toLocaleString()} transactions` : undefined}
               icon={<ArrowUpRight className="w-5 h-5" />}
               color="green"
             />
             <MetricCard
-              title="Withdrawals"
+              title="Payments out"
               value={fmt(totalWithdrawals)}
               description={withdrawalsCount > 0 ? `${withdrawalsCount.toLocaleString()} transactions` : undefined}
               icon={<ArrowDownRight className="w-5 h-5" />}
               color="purple"
             />
             <MetricCard
-              title="Payouts"
+              title="Refunds"
               value={fmt(totalPayouts)}
               description={payoutsCount > 0 ? `${payoutsCount.toLocaleString()} transactions` : undefined}
               icon={<Wallet className="w-5 h-5" />}
               color="orange"
             />
             <MetricCard
-              title="Cancellations"
+              title="Voided transactions"
               value={fmt(totalCancellations)}
               description={cancellationsCount > 0 ? `${cancellationsCount.toLocaleString()} transactions` : undefined}
               icon={<XCircle className="w-5 h-5" />}
               color="orange"
             />
             <MetricCard
-              title="NGR"
+              title="Net margin"
               value={fmt(ngr)}
               icon={<Banknote className="w-5 h-5" />}
               color="blue"
             />
             <MetricCard
-              title="GGR"
+              title="Gross margin"
               value={fmt(ggr)}
               icon={<TrendingUp className="w-5 h-5" />}
               color="blue"
@@ -210,14 +210,14 @@ export default function DashboardPage() {
             <>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ByEntityBarChart
-                  title="Deposits & Withdrawals by Cashier"
+                  title="Payments In & Out by Agent"
                   data={Object.fromEntries(
                     Object.entries(g.byCashier ?? {}).map(([k, v]) => [k, v.totals]),
                   )}
                   metricKey="deposits_withdrawals"
                 />
                 <ByEntityBarChart
-                  title="Bets & Payouts by Cashier"
+                  title="Sales & Refunds by Agent"
                   data={Object.fromEntries(
                     Object.entries(g.byCashier ?? {}).map(([k, v]) => [k, v.totals]),
                   )}
@@ -227,14 +227,14 @@ export default function DashboardPage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ByEntityBarChart
-                  title="Deposits & Withdrawals by Betshop"
+                  title="Payments In & Out by Branch"
                   data={Object.fromEntries(
                     Object.entries(g.byBetshop ?? {}).map(([k, v]) => [k, v.totals]),
                   )}
                   metricKey="deposits_withdrawals"
                 />
                 <ByEntityBarChart
-                  title="Bets & Payouts by Betshop"
+                  title="Sales & Refunds by Branch"
                   data={Object.fromEntries(
                     Object.entries(g.byBetshop ?? {}).map(([k, v]) => [k, v.totals]),
                   )}
@@ -242,12 +242,12 @@ export default function DashboardPage() {
                 />
               </div>
 
-              {/* Betshop cards */}
+              {/* Branch cards */}
               {g.byBetshopCashier && Object.keys(g.byBetshopCashier).length > 0 && (
                 <div className="rounded-lg border border-gray-200 bg-white overflow-hidden">
                   <div className="px-5 py-3.5 border-b border-gray-100 flex items-center gap-2">
                     <Store className="w-4 h-4 text-gray-400" />
-                    <h3 className="text-sm font-medium text-gray-900">Betshops</h3>
+                    <h3 className="text-sm font-medium text-gray-900">Branches</h3>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
                     {Object.entries(g.byBetshopCashier).map(([betshopName, cashiers]) => {
@@ -270,11 +270,11 @@ export default function DashboardPage() {
                           </div>
                           <div className="grid grid-cols-3 gap-2 mt-1">
                             <div>
-                              <p className="text-[10px] text-gray-400 uppercase tracking-wide">Money In</p>
+                              <p className="text-[10px] text-gray-400 uppercase tracking-wide">Inflow</p>
                               <p className="text-sm font-mono font-semibold text-primary-700">{fmt(bsRevShare)}</p>
                             </div>
                             <div>
-                              <p className="text-[10px] text-gray-400 uppercase tracking-wide">Money Out</p>
+                              <p className="text-[10px] text-gray-400 uppercase tracking-wide">Outflow</p>
                               <p className="text-sm font-mono font-semibold text-purple-700">{fmt(bsWP)}</p>
                             </div>
                             <div>
@@ -362,7 +362,7 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* Betshop detail modal */}
+      {/* Branch detail modal */}
       {selectedBetshop && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
@@ -400,11 +400,11 @@ export default function DashboardPage() {
                 </colgroup>
                 <thead>
                   <tr className="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100">
-                    <th className="pb-2 pr-4 text-left">Cashier</th>
-                    <th className="pb-2 pr-4 text-right">Bets</th>
-                    <th className="pb-2 pr-4 text-right">Deposits</th>
-                    <th className="pb-2 pr-4 text-right">Payouts</th>
-                    <th className="pb-2 text-right">Withdrawals</th>
+                    <th className="pb-2 pr-4 text-left">Agent</th>
+                    <th className="pb-2 pr-4 text-right">Sales</th>
+                    <th className="pb-2 pr-4 text-right">Payments in</th>
+                    <th className="pb-2 pr-4 text-right">Refunds</th>
+                    <th className="pb-2 text-right">Payments out</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">

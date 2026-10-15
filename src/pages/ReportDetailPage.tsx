@@ -114,12 +114,12 @@ export default function ReportDetailPage() {
 
   // Amount keys only: mixing transaction counts (depositsCount…) into an amount pie distorts it
   const PIE_SLICES = [
-    { key: 'deposits', name: 'Deposits', color: '#16a34a' },
-    { key: 'withdrawals', name: 'Withdrawals', color: '#c026d3' },
-    { key: 'bets', name: 'Bets', color: '#2563eb' },
-    { key: 'payouts', name: 'Payouts', color: '#ea580c' },
-    { key: 'winnings', name: 'Winnings', color: '#0891b2' },
-    { key: 'cancellations', name: 'Cancellations', color: '#dc2626' },
+    { key: 'deposits', name: 'Payments in', color: '#16a34a' },
+    { key: 'withdrawals', name: 'Payments out', color: '#c026d3' },
+    { key: 'bets', name: 'Sales', color: '#2563eb' },
+    { key: 'payouts', name: 'Refunds', color: '#ea580c' },
+    { key: 'winnings', name: 'Returns', color: '#0891b2' },
+    { key: 'cancellations', name: 'Voided transactions', color: '#dc2626' },
   ]
   const pieData = totals
     ? PIE_SLICES.map(({ key, name, color }) => ({ name, value: totals[key] ?? 0, color })).filter((d) => d.value > 0)
@@ -187,7 +187,7 @@ export default function ReportDetailPage() {
           )}
         >
           <Users className="w-3.5 h-3.5" />
-          By Cashier
+          By Agent
         </button>
         <button
           onClick={() => setTab('betshop')}
@@ -200,7 +200,7 @@ export default function ReportDetailPage() {
           )}
         >
           <Store className="w-3.5 h-3.5" />
-          By Betshop
+          By Branch
         </button>
       </div>
 
@@ -231,81 +231,81 @@ export default function ReportDetailPage() {
         <>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <MetricCard
-              title="Betshops"
+              title="Branches"
               value={String(betshopCount)}
               icon={<Store className="w-5 h-5" />}
               color="primary"
             />
             <MetricCard
-              title="Cashiers"
+              title="Agents"
               value={String(cashierCount)}
               icon={<Users className="w-5 h-5" />}
               color="accent"
             />
             <MetricCard
-              title="Money In"
+              title="Inflow"
               value={fmt(moneyIn)}
-              description="Bets + Deposits"
+              description="Sales + Payments in"
               icon={<TrendingUp className="w-5 h-5" />}
               color="green"
             />
             <MetricCard
-              title="Money Out"
+              title="Outflow"
               value={fmt(moneyOut)}
-              description="Payouts + Withdrawals"
+              description="Refunds + Payments out"
               icon={<ArrowDownRight className="w-5 h-5" />}
               color="purple"
             />
             <MetricCard
-              title="Bets"
+              title="Sales"
               value={fmt(totalBets)}
               description={betsCount > 0 ? `${betsCount.toLocaleString()} transactions` : undefined}
               icon={<Coins className="w-5 h-5" />}
               color="blue"
             />
             <MetricCard
-              title="Deposits"
+              title="Payments in"
               value={fmt(totalDeposits)}
               description={depositsCount > 0 ? `${depositsCount.toLocaleString()} transactions` : undefined}
               icon={<ArrowUpRight className="w-5 h-5" />}
               color="green"
             />
             <MetricCard
-              title="Withdrawals"
+              title="Payments out"
               value={fmt(totalWithdrawals)}
               description={withdrawalsCount > 0 ? `${withdrawalsCount.toLocaleString()} transactions` : undefined}
               icon={<ArrowDownRight className="w-5 h-5" />}
               color="purple"
             />
             <MetricCard
-              title="Payouts"
+              title="Refunds"
               value={fmt(totalPayouts)}
               description={payoutsCount > 0 ? `${payoutsCount.toLocaleString()} transactions` : undefined}
               icon={<Wallet className="w-5 h-5" />}
               color="orange"
             />
             <MetricCard
-              title="Won"
+              title="Returns"
               value={fmt(totalWon)}
               description={wonCount > 0 ? `${wonCount.toLocaleString()} transactions` : undefined}
               icon={<Trophy className="w-5 h-5" />}
               color="cyan"
             />
             <MetricCard
-              title="Cancellations"
+              title="Voided transactions"
               value={fmt(totalCancellations)}
               description={cancellationsCount > 0 ? `${cancellationsCount.toLocaleString()} transactions` : undefined}
               icon={<XCircle className="w-5 h-5" />}
               color="orange"
             />
             <MetricCard
-              title="NGR"
+              title="Net margin"
               value={fmt(ngr)}
               icon={<Banknote className="w-5 h-5" />}
               color="blue"
             />
             <MetricCard
-              title="GGR"
+              title="Gross margin"
               value={fmt(ggr)}
               icon={<TrendingUp className="w-5 h-5" />}
               color="blue"
@@ -319,8 +319,8 @@ export default function ReportDetailPage() {
           {tab === 'betshop' && m?.byBetshop && Object.keys(m.byBetshop).length > 0 && (
             <CashierStatsTable
               data={m.byBetshop}
-              title="Betshop breakdown"
-              entityLabel="Betshop"
+              title="Branch breakdown"
+              entityLabel="Branch"
               icon={Store}
             />
           )}
@@ -329,12 +329,12 @@ export default function ReportDetailPage() {
             <>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <ByEntityBarChart
-                  title={`Deposits & Withdrawals by ${tab === 'cashier' ? 'Cashier' : 'Betshop'}`}
+                  title={`Payments In & Out by ${tab === 'cashier' ? 'Agent' : 'Branch'}`}
                   data={activeData}
                   metricKey="deposits_withdrawals"
                 />
                 <ByEntityBarChart
-                  title={`Bets & Payouts by ${tab === 'cashier' ? 'Cashier' : 'Betshop'}`}
+                  title={`Sales & Refunds by ${tab === 'cashier' ? 'Agent' : 'Branch'}`}
                   data={activeData}
                   metricKey="bets_payouts"
                 />
@@ -350,12 +350,12 @@ export default function ReportDetailPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <TopsTable
-              title={`Top ${tab === 'cashier' ? 'Cashiers' : 'Betshops'} by Deposits`}
+              title={`Top ${tab === 'cashier' ? 'Agents' : 'Branches'} by Payments in`}
               entries={depositsTopEntries}
               type="deposits"
             />
             <TopsTable
-              title={`Top ${tab === 'cashier' ? 'Cashiers' : 'Betshops'} by Withdrawals`}
+              title={`Top ${tab === 'cashier' ? 'Agents' : 'Branches'} by Payments out`}
               entries={withdrawalsTopEntries}
               type="withdrawals"
             />

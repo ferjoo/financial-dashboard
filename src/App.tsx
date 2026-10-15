@@ -1,5 +1,5 @@
 import { lazy, Suspense, Component, type ReactNode } from 'react'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from '@/hooks/use-auth'
 import { ToastProvider } from '@/components/ui/toast'
@@ -68,6 +68,12 @@ class ErrorBoundary extends Component<
   }
 }
 
+/** Old links used /affiliates/...; keep them working after the rename to partners. */
+function LegacyPartnerRedirect() {
+  const { pathname } = useLocation()
+  return <Navigate to={pathname.replace(/^\/affiliates/, '/partners')} replace />
+}
+
 export default function App() {
   return (
     <ErrorBoundary>
@@ -79,6 +85,7 @@ export default function App() {
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/login" element={<LoginPage />} />
+                  <Route path="/affiliates/*" element={<LegacyPartnerRedirect />} />
                   <Route element={<ProtectedRoute />}>
                     <Route element={<AppLayout />}>
                       {/* Playground — admins + superadmin */}
@@ -91,23 +98,23 @@ export default function App() {
                         <Route path="users" element={<UsersPage />} />
                       </Route>
 
-                      {/* Offline dashboard — all offline roles + superadmin */}
+                      {/* In-store dashboard — all offline roles + superadmin */}
                       <Route element={<RoleRoute roles={['offline_viewer', 'offline_admin', 'superadmin']} redirectTo="/online" />}>
                         <Route index element={<DashboardPage />} />
                       </Route>
 
-                      {/* Offline full — admin + superadmin (reports, upload) */}
+                      {/* In-store full — admin + superadmin (reports, upload) */}
                       <Route element={<RoleRoute roles={['offline_admin', 'superadmin']} redirectTo="/" />}>
                         <Route path="reports" element={<ReportsPage />} />
                         <Route path="reports/:reportId" element={<ReportDetailPage />} />
                         <Route path="upload" element={<UploadPage />} />
-                        <Route path="affiliates/reports" element={<AffiliateReportsPage />} />
-                        <Route path="affiliates/reports/:reportId" element={<AffiliateReportDetailPage />} />
+                        <Route path="partners/reports" element={<AffiliateReportsPage />} />
+                        <Route path="partners/reports/:reportId" element={<AffiliateReportDetailPage />} />
                       </Route>
 
-                      {/* Affiliate dashboard — all offline roles + superadmin */}
+                      {/* Partner dashboard — all offline roles + superadmin */}
                       <Route element={<RoleRoute roles={['offline_viewer', 'offline_admin', 'superadmin']} redirectTo="/online" />}>
-                        <Route path="affiliates" element={<AffiliateDashboardPage />} />
+                        <Route path="partners" element={<AffiliateDashboardPage />} />
                       </Route>
 
                       {/* Online dashboard — all online roles + superadmin */}

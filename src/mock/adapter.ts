@@ -21,8 +21,8 @@ export type DemoRole = UserProfile['role']
 
 export const DEMO_ROLES: { role: DemoRole; label: string }[] = [
   { role: 'superadmin', label: 'Superadmin' },
-  { role: 'offline_admin', label: 'Offline admin' },
-  { role: 'offline_viewer', label: 'Offline viewer' },
+  { role: 'offline_admin', label: 'In-store admin' },
+  { role: 'offline_viewer', label: 'In-store viewer' },
   { role: 'online_admin', label: 'Online admin' },
   { role: 'online_viewer', label: 'Online viewer' },
 ]
@@ -135,7 +135,7 @@ function route(method: string, path: string, params: Record<string, string>, dat
     }
   }
 
-  // ── Affiliate reports (must match before /reports/:id) ──
+  // ── Partner reports (must match before /reports/:id) ──
   if (parts[0] === 'reports' && parts[1] === 'upload-affiliate' && method === 'post') {
     const report = simulateAffiliateUpload(seedFrom(uploadedName(data)))
     return ok({ reportId: report.reportId, affiliates: report.affiliates, totals: report.totals })

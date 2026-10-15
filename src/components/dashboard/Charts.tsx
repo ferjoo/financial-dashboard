@@ -155,11 +155,11 @@ export function ByEntityBarChart({ title, data, metricKey = 'deposits' }: ByEnti
               }}
             />
             <Legend />
-            {showDeposits    && <Bar dataKey="deposits"    name="Deposits"    fill={COLORS.primary} radius={[4, 4, 0, 0]} />}
-            {showWithdrawals && <Bar dataKey="withdrawals" name="Withdrawals" fill={COLORS.accent}  radius={[4, 4, 0, 0]} />}
-            {showBets        && <Bar dataKey="bets"        name="Bets"        fill={COLORS.blue}    radius={[4, 4, 0, 0]} />}
-            {showPayouts     && <Bar dataKey="payouts"     name="Payouts"     fill={COLORS.orange}  radius={[4, 4, 0, 0]} />}
-            {showWinnings    && <Bar dataKey="winnings"    name="Winnings"    fill={COLORS.cyan}    radius={[4, 4, 0, 0]} />}
+            {showDeposits    && <Bar dataKey="deposits"    name="Payments in"    fill={COLORS.primary} radius={[4, 4, 0, 0]} />}
+            {showWithdrawals && <Bar dataKey="withdrawals" name="Payments out" fill={COLORS.accent}  radius={[4, 4, 0, 0]} />}
+            {showBets        && <Bar dataKey="bets"        name="Sales"        fill={COLORS.blue}    radius={[4, 4, 0, 0]} />}
+            {showPayouts     && <Bar dataKey="payouts"     name="Refunds"     fill={COLORS.orange}  radius={[4, 4, 0, 0]} />}
+            {showWinnings    && <Bar dataKey="winnings"    name="Returns"    fill={COLORS.cyan}    radius={[4, 4, 0, 0]} />}
           </BarChart>
         </ResponsiveContainer>
       </div>

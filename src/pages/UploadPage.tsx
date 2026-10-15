@@ -5,7 +5,7 @@ import { FileText } from 'lucide-react'
 
 const REPORT_TYPES: { value: UploadType; label: string }[] = [
   { value: 'financial', label: 'Financial Report' },
-  { value: 'affiliate', label: 'Affiliate Report' },
+  { value: 'affiliate', label: 'Partner Report' },
 ]
 
 const FINANCIAL_COLUMNS = [
@@ -14,8 +14,8 @@ const FINANCIAL_COLUMNS = [
 ]
 
 const AFFILIATE_COLUMNS = [
-  'Aff. ID', 'Affiliate Username', 'Affiliate Status',
-  'FTD Count', 'FTD Amount', 'Currency',
+  'Partner ID', 'Partner Name', 'Partner Status',
+  'First purchases', 'First purchase value', 'Currency',
 ]
 
 export default function UploadPage() {
@@ -24,7 +24,7 @@ export default function UploadPage() {
 
   function handleSuccess(reportId: string) {
     if (uploadType === 'affiliate') {
-      navigate(`/affiliates/reports/${reportId}`)
+      navigate(`/partners/reports/${reportId}`)
     } else {
       navigate(`/reports/${reportId}`)
     }
@@ -69,7 +69,7 @@ export default function UploadPage() {
         <h3 className="text-sm font-medium text-gray-900 mb-2">Expected CSV Format</h3>
         <p className="text-xs text-gray-500">
           {uploadType === 'affiliate'
-            ? 'Comma-delimited file with affiliate performance data including:'
+            ? 'Comma-delimited file with partner performance data including:'
             : 'Tab-delimited or comma-delimited file with headers including:'}
         </p>
         <div className="mt-2.5 flex flex-wrap gap-1.5">

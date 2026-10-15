@@ -92,13 +92,13 @@ export function aggregateByEntity(
 }
 
 const METRICS = [
-  { key: 'bets',         label: 'Bets' },
+  { key: 'bets',         label: 'Sales' },
   { key: 'winnings',     label: 'Wins' },
-  { key: 'ggr',          label: 'GGR' },
-  { key: 'ngr',          label: 'NGR' },
-  { key: 'deposits',     label: 'Deposits' },
-  { key: 'withdrawals',  label: 'Withdrawals' },
-  { key: 'payouts',      label: 'Payouts' },
+  { key: 'ggr',          label: 'Gross margin' },
+  { key: 'ngr',          label: 'Net margin' },
+  { key: 'deposits',     label: 'Payments in' },
+  { key: 'withdrawals',  label: 'Payments out' },
+  { key: 'payouts',      label: 'Refunds' },
 ]
 
 // ─── sub-components ───────────────────────────────────────────────────────────

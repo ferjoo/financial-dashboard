@@ -21,7 +21,7 @@ interface Row {
   withdrawals: number
 }
 
-export default function CashierStatsTable({ data, title = 'Cashier breakdown', entityLabel = 'Cashier', icon: Icon = Users }: CashierStatsTableProps) {
+export default function CashierStatsTable({ data, title = 'Agent breakdown', entityLabel = 'Agent', icon: Icon = Users }: CashierStatsTableProps) {
   const rows: Row[] = Object.entries(data)
     .map(([name, t]) => ({
       name,
@@ -76,19 +76,19 @@ export default function CashierStatsTable({ data, title = 'Cashier breakdown', e
                 className="px-4 py-2 text-center text-xs font-medium text-green-500 uppercase tracking-wider border-l border-gray-100"
                 colSpan={3}
               >
-                Deposits
+                Payments in
               </th>
               <th
                 className="px-4 py-2 text-center text-xs font-medium text-orange-500 uppercase tracking-wider border-l border-gray-100"
                 colSpan={3}
               >
-                Payouts
+                Refunds
               </th>
               <th
                 className="px-4 py-2 text-center text-xs font-medium text-purple-500 uppercase tracking-wider border-l border-gray-100"
                 colSpan={3}
               >
-                Withdrawals
+                Payments out
               </th>
             </tr>
             <tr className="border-b border-gray-100 bg-gray-50/60">
@@ -97,17 +97,17 @@ export default function CashierStatsTable({ data, title = 'Cashier breakdown', e
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">GTQ</th>
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">$</th>
 
-              {/* Deposits */}
+              {/* Payments in */}
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider border-l border-gray-100">#</th>
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">GTQ</th>
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">$</th>
 
-              {/* Payouts */}
+              {/* Refunds */}
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider border-l border-gray-100">#</th>
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">GTQ</th>
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">$</th>
 
-              {/* Withdrawals */}
+              {/* Payments out */}
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider border-l border-gray-100">#</th>
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">GTQ</th>
               <th className="px-4 py-2 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">$</th>

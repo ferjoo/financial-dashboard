@@ -23,10 +23,10 @@ interface Row {
 }
 
 const GROUPS = [
-  { key: 'bets', label: 'Bets', colorA: 'text-blue-700', colorB: 'text-blue-500' },
-  { key: 'deposits', label: 'Deposits', colorA: 'text-green-700', colorB: 'text-green-500' },
-  { key: 'payouts', label: 'Payouts', colorA: 'text-orange-700', colorB: 'text-orange-500' },
-  { key: 'withdrawals', label: 'Withdrawals', colorA: 'text-purple-700', colorB: 'text-purple-500' },
+  { key: 'bets', label: 'Sales', colorA: 'text-blue-700', colorB: 'text-blue-500' },
+  { key: 'deposits', label: 'Payments in', colorA: 'text-green-700', colorB: 'text-green-500' },
+  { key: 'payouts', label: 'Refunds', colorA: 'text-orange-700', colorB: 'text-orange-500' },
+  { key: 'withdrawals', label: 'Payments out', colorA: 'text-purple-700', colorB: 'text-purple-500' },
 ] as const
 
 export default function ComparisonBreakdownTable({ title, icon, dataA, dataB, labelA, labelB }: Props) {

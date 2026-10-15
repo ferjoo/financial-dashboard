@@ -51,8 +51,8 @@ export default function AffiliateReportDetailPage() {
     if (!reportId) return
     deleteReport.mutate(reportId, {
       onSuccess: () => {
-        toast('Affiliate report deleted', 'success')
-        navigate('/affiliates/reports')
+        toast('Partner report deleted', 'success')
+        navigate('/partners/reports')
       },
     })
   }
@@ -69,7 +69,7 @@ export default function AffiliateReportDetailPage() {
     return (
       <div className="text-center py-12">
         <p className="text-gray-500">Report not found.</p>
-        <Button variant="secondary" className="mt-3" onClick={() => navigate('/affiliates/reports')}>
+        <Button variant="secondary" className="mt-3" onClick={() => navigate('/partners/reports')}>
           Back to reports
         </Button>
       </div>
@@ -87,13 +87,13 @@ export default function AffiliateReportDetailPage() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/affiliates/reports')}
-            aria-label="Back to affiliate reports"
+            onClick={() => navigate('/partners/reports')}
+            aria-label="Back to partner reports"
           >
             <ArrowLeft className="w-4 h-4" aria-hidden="true" />
           </Button>
           <div>
-            <h1 className="text-lg font-semibold text-gray-900">Affiliates · {formatAffiliatePeriod(reportId!)}</h1>
+            <h1 className="text-lg font-semibold text-gray-900">Partners · {formatAffiliatePeriod(reportId!)}</h1>
             <p className="text-xs text-gray-500 mt-0.5">
               <span className="font-mono">{reportId}</span> · uploaded {new Date(report.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </p>
@@ -131,36 +131,36 @@ export default function AffiliateReportDetailPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <MetricCard
-          title="FTD Count"
+          title="First purchases"
           value={totalFtdCount.toLocaleString()}
           icon={<Hash className="w-5 h-5" />}
           color="primary"
         />
         <MetricCard
-          title="FTD Amount"
+          title="First purchase value"
           value={format(totalFtdAmount)}
           icon={<DollarSign className="w-5 h-5" />}
           color="green"
         />
         <MetricCard
-          title="Affiliates"
+          title="Partners"
           value={affiliateCount.toLocaleString()}
           icon={<Users className="w-5 h-5" />}
           color="blue"
         />
       </div>
 
-      {/* Affiliates Table */}
+      {/* Partners Table */}
       <div className="rounded-lg border border-gray-200 bg-white overflow-hidden">
         <div className="px-5 py-4 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-gray-900">Affiliates</h2>
+          <h2 className="text-sm font-semibold text-gray-900">Partners</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50/50">
                 <SortableHeader
-                  label="Username"
+                  label="Partner"
                   sortKey="username"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -170,7 +170,7 @@ export default function AffiliateReportDetailPage() {
                   Status
                 </th>
                 <SortableHeader
-                  label="Player Reg."
+                  label="Sign-ups"
                   sortKey="playerRegistrations"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -178,7 +178,7 @@ export default function AffiliateReportDetailPage() {
                   align="right"
                 />
                 <SortableHeader
-                  label="FTD Count"
+                  label="First purchases"
                   sortKey="ftdCount"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -186,7 +186,7 @@ export default function AffiliateReportDetailPage() {
                   align="right"
                 />
                 <SortableHeader
-                  label="FTD Amount"
+                  label="First purchase value"
                   sortKey="ftdAmount"
                   currentKey={sortKey}
                   currentDir={sortDir}
@@ -199,7 +199,7 @@ export default function AffiliateReportDetailPage() {
               {affiliates.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-5 py-8 text-center text-sm text-gray-400">
-                    No affiliates in this report.
+                    No partners in this report.
                   </td>
                 </tr>
               ) : (
