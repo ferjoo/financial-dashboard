@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Never commit data exports or local config
+*.csv
+.env*
+!.env.example
+.aws/
+*.pem
+*.key
+.npmrc.local
+.netrc
+
+.DS_Store
